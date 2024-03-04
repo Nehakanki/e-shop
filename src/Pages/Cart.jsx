@@ -4,56 +4,51 @@ import { NavLink } from 'react-router-dom';
 import Cartitem from '../Components/Cartitem';
 
 const Cart = () => {
-  const cart  = useSelector((state) => state.cart); //cart data
-  
+  const cart = useSelector((state) => state.cart); //cart data
 
   const [totalAmount, setTotalAmount] = useState(() => cart.reduce((acc, curr) => acc + curr.price, 0));
 
-  // Important Part
+  // Calculate total amount whenever cart changes
   useEffect(() => {
-    // to calculate the sum of array items in the cart
-    setTotalAmount(cart.reduce((acc, curr) => acc + curr.price, 0));
+    const newTotalAmount = cart.reduce((acc, curr) => acc + curr.price, 0);
+    setTotalAmount(newTotalAmount);
   }, [cart]);
 
   return (
-   <div className='flex flex-row mt-16 justify-center items-center'>
-     <div >
+    <div className='flex flex-col justify-center items-center mt-16'>
       {cart.length > 0 ? (
-        <div className='flex'>
-          {/* show cart item */}
-          {/* //max-w-md */}
-          <div className='flex flex-col  ' >
-            {cart.map((item, index) => {
-              return <Cartitem key={item.id} item={item} itemIndex={index} />;
-            })}
+        <div className='w-full max-w-screen-lg flex flex-col md:flex-row'>
+          {/* Cart items */}
+          <div className='flex flex-col'>
+            {cart.map((item, index) => (
+              <Cartitem key={item.id} item={item} itemIndex={index} />
+            ))}
           </div>
 
-          <div className='flex flex-col justify-between items-center ml-11'>
-            <div className='flex flex-col mt-10  '>
-                <div className='text-[20px] font-bold uppercase '>Your Cart</div>
-                <div className='text-[35px] font-bold text-green-500 uppercase'>Summary</div>
-                <p>
-                  <span className='text-gray-700 font-semibold text-[20px] pt-5'>Total Items: {cart.length}</span>
-                </p>
-              </div>
-
-              <div>
-                <p className='text-[20px]'>Total Amount: <span className='font-bold '>${totalAmount.toFixed(2)}</span></p>
-                <button className='bg-green-600 text-slate-100 font-semibold uppercase rounded-xl py-3 px-10  m-8 text-[20px]'>CheckOut</button>
-              </div>
-
-             </div>  
+          {/* Cart summary */}
+          <div className='flex flex-col justify-between items-center ml-6 md:ml-11 mt-8 md:mt-0'>
+            <div className='flex flex-col mt-10'>
+              <div className='text-lg font-bold uppercase'>Your Cart</div>
+              <div className='text-xl font-bold text-green-500 uppercase'>Summary</div>
+              <p>
+                <span className='text-gray-700 font-semibold'>Total Items: {cart.length}</span>
+              </p>
+            </div>
+            <div className='mt-6 md:mt-8'>
+              <p className='text-lg'>Total Amount: <span className='font-bold'>${totalAmount.toFixed(2)}</span></p>
+              <button className='bg-green-600 text-white font-semibold uppercase rounded-xl py-3 px-10 mt-4 text-lg'>Checkout</button>
+            </div>
+          </div>
         </div>
       ) : (
-        <div className='flex flex-col justify-center items-center  h-screen'>
-          <h2 className='text-red-700 uppercase font-semibold text-[20px]'> Cart Empty</h2>
+        <div className='flex flex-col justify-center items-center h-screen'>
+          <h2 className='text-red-700 uppercase font-semibold text-lg'>Cart Empty</h2>
           <NavLink to={'/'}>
-            <button className='bg-green-600 text-slate-100 font-semibold uppercase rounded-xl py-3 px-10  m-8 text-[20px]'>Shop Now</button>
+            <button className='bg-green-600 text-white font-semibold uppercase rounded-xl py-3 px-10 mt-6 text-lg'>Shop Now</button>
           </NavLink>
         </div>
       )}
     </div>
-   </div>
   );
 };
 

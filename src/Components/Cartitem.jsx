@@ -14,12 +14,12 @@ const Cartitem = ({item}) => {
   }
   return (
     
-      <div className='flex gap-4 border-b-4 border-gray-700 justify-center items-center  '>
+      <div className='flex gap-4 border-b-4 border-gray-700 justify-center items-center m-1'>
         <div>
-            <img src={item.image} className='h-[180px] w-[180px] mr-5'/>
+            <img src={item.image} className=' sm:h-[100px] sm:w-[120px]        lg:h-[180px] lg:w-[180px] mr-5' alt='items'/>
         </div>
         <div className='h-[250px] w-[360px] pt-8 '>
-            <h1 className='text-gray-700 font-bold text-lg text-left  w-60 mt-1 mb-2'>{item.title}</h1>
+            <h1 className='text-gray-700 font-bold sm:text-sm  md:text-lg text-left  w-60 mt-1 mb-2'>{item.title}</h1>
             <h1 className='w-40 text-gray-500 text-[12px] text-left '>{item.description.split(" ").slice(0,10).join(" ")}</h1>
             <div className='flex justify-between items-center mt-3'>
                 <p className='font-bold text-gray-700'>${item.price}</p>
